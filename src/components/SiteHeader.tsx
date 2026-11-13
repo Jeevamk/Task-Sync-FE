@@ -20,9 +20,9 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container">
-        <Link href="/" className="logo" aria-label="Task Sync home">
+        <Link href="/" className="logo" aria-label="Taskvane home">
           <LogoMark />
-          Task Sync
+          Taskvane
         </Link>
         <nav className="nav" aria-label="Main">
           {LINKS.map((l) => (

@@ -25,7 +25,7 @@ export default function DailyUse() {
       <div className="art-frame" style={{ margin: '8px 0 24px' }}>
         <BoardArt />
       </div>
-      <Table head={['You do this in Trello', 'Task Sync does this']} rows={ROWS.map(([a, b]) => [<strong key={a}>{a}</strong>, b])} />
+      <Table head={['You do this in Trello', 'Taskvane does this']} rows={ROWS.map(([a, b]) => [<strong key={a}>{a}</strong>, b])} />
       <p>Every change also adds a row to the History tab: when, which task, what changed, from what to what, by whom, and from where.</p>
       <Callout type="warn">
         <strong>Trello is the source of truth.</strong> Edit tasks in Trello. Values typed directly into the Tasks tab are overwritten by the next update from Trello (your

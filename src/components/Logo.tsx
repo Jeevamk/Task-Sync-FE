@@ -1,4 +1,4 @@
-/** Task Sync mark: two arrows forming a loop. */
+/** Taskvane mark: two arrows forming a loop. */
 export function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">

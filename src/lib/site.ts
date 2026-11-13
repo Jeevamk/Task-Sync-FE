@@ -1,11 +1,11 @@
-/** Address of the Task Sync API (backend project). Set NEXT_PUBLIC_API_URL when building. */
+/** Address of the Taskvane API (backend project). Set NEXT_PUBLIC_API_URL when building. */
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000').replace(/\/$/, '');
 
 export const SITE = {
-  name: 'Task Sync',
+  name: 'Taskvane',
   tagline: 'Trello, Google Sheets and Slack, always in step.',
   description:
-    'Task Sync keeps Trello, a Google Sheet and Slack in step for your team: every card change is recorded in the sheet, posted to a Slack thread, and checked against your team rules.',
+    'Taskvane keeps Trello, a Google Sheet and Slack in step for your team: every card change is recorded in the sheet, posted to a Slack thread, and checked against your team rules.',
 };
 
 /** Documentation pages, in reading order (used by the sidebar and the previous/next links). */

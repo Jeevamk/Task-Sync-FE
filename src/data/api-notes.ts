@@ -20,7 +20,7 @@ export const SECTION_INFO: Record<string, { title: string; intro: string }> = {
   Login: { title: 'Login', intro: 'Get a token. Send it on every other request as  Authorization: Bearer <token>. Tokens are valid for 7 days.' },
   Organizations: { title: 'Organizations', intro: 'An organization is your team. Its Trello, Slack, team list and projects are never visible to other organizations.' },
   Connections: { title: 'Connections', intro: 'Connect the organization’s own Trello account and Slack workspace. Tokens are stored encrypted.' },
-  Team: { title: 'Team', intro: 'The people who work on your boards and their role. Task Sync uses this list to recognise who moved a card.' },
+  Team: { title: 'Team', intro: 'The people who work on your boards and their role. Taskvane uses this list to recognise who moved a card.' },
   Projects: { title: 'Projects', intro: 'A project links one Trello board to one Google Sheet and one Slack channel.' },
   Cards: { title: 'Cards', intro: 'Create Trello cards from your own tools. They then sync like any card made in Trello.' },
   Sheets: { title: 'Sheet import', intro: 'Called by the Apps Script inside the Google Sheet (Import tab). Authenticated with the X-Sync-Secret header.' },
@@ -77,7 +77,7 @@ export const API_NOTES: Record<string, ApiNote> = {
         trello: { connected: true, account: 'Athira Shivaram (@athirashivaram)', since: '2026-11-12T16:40:00.000Z' },
         slack: { connected: true, account: 'Acme workspace', since: '2026-11-12T16:42:00.000Z' },
       },
-      googleSheets: { shareWith: 'tasksync@your-project.iam.gserviceaccount.com', howTo: 'Share your tracker sheet with this email as Editor' },
+      googleSheets: { shareWith: 'taskvane@your-project.iam.gserviceaccount.com', howTo: 'Share your tracker sheet with this email as Editor' },
       projects: 1,
       teamMembers: 4,
     },
@@ -101,7 +101,7 @@ export const API_NOTES: Record<string, ApiNote> = {
   },
   'POST /orgs/{orgId}/connections/slack/start': {
     section: 'Connections',
-    summary: 'Add Task Sync to Slack',
+    summary: 'Add Taskvane to Slack',
     description: 'Returns a link. Open it, pick the workspace and click Allow. The link works once, for 10 minutes.',
     status: '201',
     response: { authorizeUrl: 'https://slack.com/oauth/v2/authorize?client_id=…&scope=chat:write,…' },
@@ -151,7 +151,7 @@ export const API_NOTES: Record<string, ApiNote> = {
   'GET /orgs/{orgId}/slack/channels': {
     section: 'Projects',
     summary: 'Slack channels you can use',
-    description: 'Channels in the connected workspace. For a private channel, first type /invite @Task Sync in it.',
+    description: 'Channels in the connected workspace. For a private channel, first type /invite @Taskvane in it.',
     response: [{ id: 'C0123456789', name: 'proj-website', is_private: false, is_member: true }],
   },
   'GET /orgs/{orgId}/projects': {
@@ -207,7 +207,7 @@ export const API_NOTES: Record<string, ApiNote> = {
   'POST /orgs/{orgId}/projects/{projectId}/import': {
     section: 'Projects',
     summary: 'Import open cards again',
-    description: 'Cards Task Sync already knows are skipped.',
+    description: 'Cards Taskvane already knows are skipped.',
     status: '201',
     response: { imported: 2, skipped: 10 },
   },

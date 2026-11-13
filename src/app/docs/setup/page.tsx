@@ -39,7 +39,7 @@ export default function Setup() {
           <Callout type="warn">
             <p>
               <strong>Create the organization once.</strong> The team list, Trello, Slack and projects all belong to one organization. If the team is added to one
-              organization and the project to another, Task Sync does not recognise your team on that board, and every move is flagged as “not allowed”. Check with{' '}
+              organization and the project to another, Taskvane does not recognise your team on that board, and every move is flagged as “not allowed”. Check with{' '}
               <Endpoint method="GET" path="/orgs" />.
             </p>
           </Callout>
@@ -58,12 +58,12 @@ export default function Setup() {
               The page shows <strong>✅ Trello connected</strong>. You can close it.
             </li>
           </ol>
-          <p>Task Sync acts in Trello as this account. Use an account that is a member of every board you want to sync.</p>
+          <p>Taskvane acts in Trello as this account. Use an account that is a member of every board you want to sync.</p>
           <Callout>The connect link works once, for 10 minutes. If it expired, start again.</Callout>
         </li>
 
         <li>
-          <h3>Add Task Sync to Slack</h3>
+          <h3>Add Taskvane to Slack</h3>
           <ol>
             <li>
               Send <Endpoint method="POST" path="/orgs/{orgId}/connections/slack/start" />.
@@ -80,7 +80,7 @@ export default function Setup() {
             title="Response (part)"
             code={json({
               connections: { trello: { connected: true, account: 'Athira Shivaram (@athirashivaram)' }, slack: { connected: true, account: 'Acme workspace' } },
-              googleSheets: { shareWith: 'tasksync@your-project.iam.gserviceaccount.com' },
+              googleSheets: { shareWith: 'taskvane@your-project.iam.gserviceaccount.com' },
             })}
           />
         </li>
@@ -90,7 +90,7 @@ export default function Setup() {
           <ol>
             <li>Create a new Google Sheet, one per project.</li>
             <li>
-              Add a tab named exactly <strong>Tasks</strong>. In row 1, put the column headers you want. Only <code>Task ID</code> is required; Task Sync fills these when
+              Add a tab named exactly <strong>Tasks</strong>. In row 1, put the column headers you want. Only <code>Task ID</code> is required; Taskvane fills these when
               they exist, in any order:
               <CodeBlock lang="text" title="Tasks tab, row 1" code={TASKS_COLUMNS} />
               Columns with other names (your notes, formulas) are never overwritten.
@@ -111,14 +111,14 @@ export default function Setup() {
             <Endpoint method="GET" path="/orgs/{orgId}/slack/channels" /> lists the channels. Copy the <code>id</code> of the one for updates.
           </p>
           <Callout>
-            Private channel? Open it in Slack and type <code>/invite @Task Sync</code> first.
+            Private channel? Open it in Slack and type <code>/invite @Taskvane</code> first.
           </Callout>
         </li>
 
         <li>
           <h3>Add your team members</h3>
           <p>
-            Task Sync uses the team list to know <strong>who</strong> moved a card: for the rules, Slack mentions and the Assignee column. Send{' '}
+            Taskvane uses the team list to know <strong>who</strong> moved a card: for the rules, Slack mentions and the Assignee column. Send{' '}
             <Endpoint method="POST" path="/orgs/{orgId}/team" /> for each person:
           </p>
           <CodeBlock lang="json" title="Request body" code={json({ name: 'Athira', email: 'athira@company.com', role: 'COORDINATOR', trello: '@athirashivaram' })} />
@@ -165,7 +165,7 @@ export default function Setup() {
             ]}
           />
           <p>
-            Task Sync checks everything first (nothing changes if a check fails), sets up the board, registers the Trello webhook and imports the open cards: each gets a
+            Taskvane checks everything first (nothing changes if a check fails), sets up the board, registers the Trello webhook and imports the open cards: each gets a
             Tasks row and a Slack message. Always read <code>warnings</code> in the response.
           </p>
           <Callout type="ok">

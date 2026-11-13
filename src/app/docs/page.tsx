@@ -11,7 +11,7 @@ export default function GettingStarted() {
     <DocPage
       href="/docs/"
       title="Getting started"
-      lead="Task Sync keeps Trello, a Google Sheet and Slack in step for your team. Work happens in Trello as usual; every change is recorded and shown automatically."
+      lead="Taskvane keeps Trello, a Google Sheet and Slack in step for your team. Work happens in Trello as usual; every change is recorded and shown automatically."
     >
       <div className="art-frame" style={{ margin: '8px 0 24px' }}>
         <FlowDiagram />
@@ -36,7 +36,7 @@ export default function GettingStarted() {
           [<strong key="o">Organization</strong>, 'Your team or company. It has its own Trello, Slack, sheet and team list. Organizations never see each other’s data.'],
           [<strong key="p">Project</strong>, 'One Trello board, linked to one Google Sheet and one Slack channel. An organization can have many projects.'],
           [<strong key="t">Team member</strong>, <>A person in your team list, with a role: <code>COORDINATOR</code>, <code>DEV</code> or <code>QA</code>.</>],
-          [<strong key="k">Task</strong>, <>A Trello card that Task Sync tracks. It gets a key like <code>TASK-12</code>.</>],
+          [<strong key="k">Task</strong>, <>A Trello card that Taskvane tracks. It gets a key like <code>TASK-12</code>.</>],
           [<strong key="s">Status lists</strong>, 'The 5 Trello lists that mean a status: To Do → Assigned → In Progress → Ready for Testing → Completed.'],
         ]}
       />
@@ -45,10 +45,10 @@ export default function GettingStarted() {
       <Table
         head={['What', 'Notes']}
         rows={[
-          ['The Task Sync API address', <>For example <code>{API_URL}</code>. In these docs it is written <code>&lt;API&gt;</code>.</>],
+          ['The Taskvane API address', <>For example <code>{API_URL}</code>. In these docs it is written <code>&lt;API&gt;</code>.</>],
           ['A Trello account', 'It must be able to see (and change) the boards you want to sync.'],
           ['Slack permission to install apps', 'Only for connecting Slack, once.'],
-          ['A Google account', 'To own the sheet and share it with Task Sync.'],
+          ['A Google account', 'To own the sheet and share it with Taskvane.'],
         ]}
       />
 

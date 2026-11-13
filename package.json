@@ -1,5 +1,5 @@
 {
-  "name": "task-sync-fe",
+  "name": "taskvane-fe",
   "version": "0.3.0",
   "private": true,
   "description": "Task Sync front end: landing page and documentation (separate from the backend)",

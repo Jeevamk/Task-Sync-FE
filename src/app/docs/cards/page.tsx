@@ -28,7 +28,7 @@ export default function Cards() {
           backend’s <code>SHEET_SYNC_SECRET</code>).
         </li>
         <li>
-          Reload the sheet. In the new <strong>Task Sync</strong> menu, click <strong>Set up Import tab</strong>.
+          Reload the sheet. In the new <strong>Taskvane</strong> menu, click <strong>Set up Import tab</strong>.
         </li>
       </ol>
 
@@ -42,11 +42,11 @@ export default function Cards() {
           ['Assignee', 'Team member name or email (in the team list, with a Trello username).'],
           ['Due Date', '2026-11-20 = due at 18:00 India time.'],
           ['Labels', 'Comma-separated label names that exist on the board, e.g. High, Frontend.'],
-          ['Status, Trello Card, Row Key', 'Filled by Task Sync. Do not edit.'],
+          ['Status, Trello Card, Row Key', 'Filled by Taskvane. Do not edit.'],
         ]}
       />
       <p>
-        Fill the rows, then click <strong>Task Sync → Create Trello cards</strong>. Each row’s Status shows <code>created</code> with the card link, <code>already created</code>,
+        Fill the rows, then click <strong>Taskvane → Create Trello cards</strong>. Each row’s Status shows <code>created</code> with the card link, <code>already created</code>,
         or the error for that row. Rows already created are never created twice.
       </p>
 

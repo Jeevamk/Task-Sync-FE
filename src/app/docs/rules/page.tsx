@@ -28,7 +28,7 @@ export default function Rules() {
         <RulesArt />
       </div>
       <p>
-        Trello cannot block a move, so Task Sync <strong>applies it anyway and flags it</strong>: the Slack update ends with{' '}
+        Trello cannot block a move, so Taskvane <strong>applies it anyway and flags it</strong>: the Slack update ends with{' '}
         <em>“⚠️ This move is not allowed by the team rules — coordinator, please check.”</em> and the History records it.
       </p>
       <Callout type="warn">

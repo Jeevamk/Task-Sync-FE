@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="container">
         <div>
           <div className="logo" style={{ fontSize: 15 }}>
-            <LogoMark size={22} /> Task Sync
+            <LogoMark size={22} /> Taskvane
           </div>
           <p style={{ margin: '8px 0 0' }}>Trello, Google Sheets and Slack, always in step.</p>
         </div>

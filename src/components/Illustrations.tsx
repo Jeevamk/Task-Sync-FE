@@ -8,12 +8,12 @@ const fill = (token: string): CSSProperties => ({ fill: `var(--${token})` });
 const stroke = (token: string, width = 1.5): CSSProperties => ({ stroke: `var(--${token})`, strokeWidth: width, fill: 'none' });
 const box = (bg: string, line = 'border'): CSSProperties => ({ fill: `var(--${bg})`, stroke: `var(--${line})`, strokeWidth: 1.5 });
 
-/* ───────────── Hero: Trello → Task Sync → Sheet + Slack ───────────── */
+/* ───────────── Hero: Trello → Taskvane → Sheet + Slack ───────────── */
 export function FlowDiagram() {
   return (
     <svg className="art" viewBox="0 0 560 380" role="img" aria-labelledby="flow-title flow-desc">
-      <title id="flow-title">How Task Sync connects your tools</title>
-      <desc id="flow-desc">A card moved on a Trello board goes to Task Sync, which updates the Google Sheet and posts to a Slack thread.</desc>
+      <title id="flow-title">How Taskvane connects your tools</title>
+      <desc id="flow-desc">A card moved on a Trello board goes to Taskvane, which updates the Google Sheet and posts to a Slack thread.</desc>
 
       {/* Trello board */}
       <g transform="translate(12 92)">
@@ -47,7 +47,7 @@ export function FlowDiagram() {
           <path d="M30 20a12 12 0 0 1-21 8" />
           <path d="M8 32v-6h6" strokeLinejoin="round" />
         </g>
-        <text x="62" y="78" textAnchor="middle" fontSize="15" fontWeight="800" fill="#fff">Task Sync</text>
+        <text x="62" y="78" textAnchor="middle" fontSize="15" fontWeight="800" fill="#fff">Taskvane</text>
         <text x="62" y="97" textAnchor="middle" fontSize="9.5" fill="#e0e7ff">records · checks rules</text>
         <text x="62" y="110" textAnchor="middle" fontSize="9.5" fill="#e0e7ff">keeps history</text>
       </g>
@@ -139,7 +139,7 @@ export function BoardArt() {
   );
 }
 
-/* ───────────── Step 2: Task Sync records and checks ───────────── */
+/* ───────────── Step 2: Taskvane records and checks ───────────── */
 export function RulesArt() {
   const rows = [
     { icon: '✓', label: 'Recorded TASK-7: Assigned → In Progress', tone: 'ok' },
@@ -149,7 +149,7 @@ export function RulesArt() {
   ];
   return (
     <svg className="art" viewBox="0 0 520 300" role="img" aria-labelledby="rules-title">
-      <title id="rules-title">Task Sync records the change, checks the team rules and saves the history; a rule-breaking move is flagged</title>
+      <title id="rules-title">Taskvane records the change, checks the team rules and saves the history; a rule-breaking move is flagged</title>
       <rect width="520" height="300" rx="16" style={fill('brand-soft')} />
       <g transform="translate(24 22)">
         <rect width="472" height="176" rx="12" style={box('bg-elev')} />
@@ -234,7 +234,7 @@ export function SlackArt() {
         <g transform="translate(16 56)">
           <rect width="34" height="34" rx="8" style={fill('brand')} />
           <text x="17" y="22" textAnchor="middle" fontSize="13" fontWeight="800" fill="#fff">TS</text>
-          <text x="46" y="12" fontSize="12" fontWeight="800" style={fill('text')}>Task Sync</text>
+          <text x="46" y="12" fontSize="12" fontWeight="800" style={fill('text')}>Taskvane</text>
           <text x="112" y="12" fontSize="10" style={fill('text-faint')}>APP · 22:55</text>
           <text x="46" y="30" fontSize="12" fontWeight="700" style={fill('text')}>TASK-7 · Fix login button</text>
           <text x="46" y="47" fontSize="11.5" style={fill('text-soft')}>Status: In Progress · Assignee: @Athira</text>

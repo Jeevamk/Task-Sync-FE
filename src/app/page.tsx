@@ -16,8 +16,8 @@ const STEPS = [
   },
   {
     art: <RulesArt />,
-    title: 'Task Sync records every change and checks the rules',
-    text: 'Trello tells Task Sync about each change within seconds. It saves the task, stamps the time it reached each stage, and checks who is allowed to make that move.',
+    title: 'Taskvane records every change and checks the rules',
+    text: 'Trello tells Taskvane about each change within seconds. It saves the task, stamps the time it reached each stage, and checks who is allowed to make that move.',
     points: ['Picked up, started, ready-for-testing and completed times', 'Reopened tasks are counted', 'Moves that break the team rules are flagged, never silently lost'],
   },
   {
@@ -47,8 +47,8 @@ const SETUP = [
   ['Log in', 'Google sign-in, or dev login while testing.'],
   ['Create your organization', 'Your team’s private space.'],
   ['Connect Trello', 'One click, then Allow.'],
-  ['Add Task Sync to Slack', 'Pick your workspace, then Allow.'],
-  ['Share your Google Sheet', 'With the Task Sync email, as Editor.'],
+  ['Add Taskvane to Slack', 'Pick your workspace, then Allow.'],
+  ['Share your Google Sheet', 'With the Taskvane email, as Editor.'],
   ['Pick the Slack channel', 'Where updates should go.'],
   ['Add your team', 'Name, email, role and Trello username.'],
   ['Create a project', 'Board + sheet + channel. Cards are imported straight away.'],
@@ -65,7 +65,7 @@ export default function Home() {
               Your board, your tracker and your team chat, <span className="accent">always in step.</span>
             </h1>
             <p className="lead">
-              Task Sync turns every Trello card change into an up-to-date Google Sheet row and a tidy Slack thread, and checks it against
+              Taskvane turns every Trello card change into an up-to-date Google Sheet row and a tidy Slack thread, and checks it against
               your team’s rules. No more copying status by hand.
             </p>
             <div className="hero-actions">

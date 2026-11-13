@@ -1,8 +1,8 @@
-# Task Sync FE
+# Taskvane FE
 
-Landing page and documentation for **Task Sync**. This is a separate project from the API (`task-sync-backend`) and is hosted on its own.
+Landing page and documentation for **Taskvane**. This is a separate project from the API (`task-sync-backend`) and is hosted on its own.
 
-- **Landing page** (`/`): what Task Sync does, with illustrations of the flow (Trello → Task Sync → Google Sheet + Slack).
+- **Landing page** (`/`): what Taskvane does, with illustrations of the flow (Trello → Taskvane → Google Sheet + Slack).
 - **Guide** (`/docs/…`): setup step by step, daily use, creating cards, team rules, sheet and Slack output, managing projects, troubleshooting.
 - **API reference** (`/docs/api/`): every endpoint with its parameters, request fields, rules and example requests and responses, plus search.
 
