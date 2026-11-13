@@ -810,7 +810,7 @@
     }
   },
   "info": {
-    "title": "Task Sync API",
+    "title": "Taskvane API",
     "description": "Each organization connects its own Trello, Slack and Google Sheet. Log in, create an organization, connect, then add a project.",
     "version": "0.3.0",
     "contact": {}

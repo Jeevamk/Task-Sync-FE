@@ -2,7 +2,7 @@
   "name": "taskvane-fe",
   "version": "0.3.0",
   "private": true,
-  "description": "Task Sync front end: landing page and documentation (separate from the backend)",
+  "description": "Taskvane front end: landing page and documentation (separate from the backend)",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
