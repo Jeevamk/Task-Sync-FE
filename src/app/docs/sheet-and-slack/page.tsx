@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { CodeBlock } from '@/components/CodeBlock';
 import { DocPage, Table } from '@/components/Docs';
-import { SheetArt, SlackArt } from '@/components/Illustrations';
+import { ArtFrame, SheetArt, SlackArt } from '@/components/Illustrations';
 
 export const metadata: Metadata = { title: 'Sheet & Slack output' };
 
@@ -18,9 +18,9 @@ export default function SheetAndSlack() {
   return (
     <DocPage href="/docs/sheet-and-slack/" title="What you see in the sheet and in Slack">
       <h2>The Google Sheet</h2>
-      <div className="art-frame" style={{ margin: '8px 0 24px' }}>
+      <ArtFrame className="mt-2 mb-6">
         <SheetArt />
-      </div>
+      </ArtFrame>
       <p>
         <strong>Tasks tab</strong>: one row per task, found by <code>Task ID</code> and updated in place.
       </p>
@@ -43,9 +43,9 @@ export default function SheetAndSlack() {
       </p>
 
       <h2>Slack</h2>
-      <div className="art-frame" style={{ margin: '8px 0 24px' }}>
+      <ArtFrame className="mt-2 mb-6">
         <SlackArt />
-      </div>
+      </ArtFrame>
       <p>Each task gets one message in the project channel. Every later update is a reply in its thread:</p>
       <CodeBlock lang="text" title="#proj-website" code={THREAD} />
       <p>

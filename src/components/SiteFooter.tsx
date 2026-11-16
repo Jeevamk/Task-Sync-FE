@@ -4,15 +4,15 @@ import { LogoMark } from './Logo';
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
-      <div className="container">
+    <footer className="border-t border-line bg-surface-soft pt-8 pb-10 text-sm text-fg-faint">
+      <div className="wrap flex flex-wrap justify-between gap-x-8 gap-y-4">
         <div>
-          <div className="logo" style={{ fontSize: 15 }}>
+          <div className="inline-flex items-center gap-2.5 text-[15px] font-bold whitespace-nowrap text-fg">
             <LogoMark size={22} /> Taskvane
           </div>
-          <p style={{ margin: '8px 0 0' }}>Trello, Google Sheets and Slack, always in step.</p>
+          <p className="mt-2 mb-0">Trello, Google Sheets and Slack, always in step.</p>
         </div>
-        <nav aria-label="Footer">
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-2 [&_a]:text-fg-soft">
           <Link href="/docs/">Getting started</Link>
           <Link href="/docs/setup/">Setup guide</Link>
           <Link href="/docs/api/">API reference</Link>

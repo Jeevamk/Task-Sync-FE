@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Callout, DocPage, Table } from '@/components/Docs';
-import { FlowDiagram } from '@/components/Illustrations';
+import { ArtFrame, FlowDiagram } from '@/components/Illustrations';
 import { API_URL } from '@/lib/site';
 
 export const metadata: Metadata = { title: 'Getting started' };
@@ -13,9 +13,9 @@ export default function GettingStarted() {
       title="Getting started"
       lead="Taskvane keeps Trello, a Google Sheet and Slack in step for your team. Work happens in Trello as usual; every change is recorded and shown automatically."
     >
-      <div className="art-frame" style={{ margin: '8px 0 24px' }}>
+      <ArtFrame className="mt-2 mb-6">
         <FlowDiagram />
-      </div>
+      </ArtFrame>
 
       <ul>
         <li>
@@ -48,9 +48,13 @@ export default function GettingStarted() {
           ['The Taskvane API address', <>For example <code>{API_URL}</code>. In these docs it is written <code>&lt;API&gt;</code>.</>],
           ['A Trello account', 'It must be able to see (and change) the boards you want to sync.'],
           ['Slack permission to install apps', 'Only for connecting Slack, once.'],
-          ['A Google account', 'To own the sheet and share it with Taskvane.'],
+          ['A Google account', 'To own the sheet. Taskvane can create it for you, or you share your own.'],
         ]}
       />
+      <Callout type="ok">
+        <strong>No Trello, Slack or Google account yet?</strong> All three are free and take a few minutes. Taskvane then creates the board, the sheet and the Slack
+        channel for you. See <Link href="/docs/setup/#choose-your-path">Set up your team → Choose your path</Link>.
+      </Callout>
 
       <h2>How to send the requests</h2>
       <p>

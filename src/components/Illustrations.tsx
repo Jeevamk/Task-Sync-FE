@@ -2,16 +2,21 @@
  * Flow illustrations, drawn as inline SVG so they stay sharp and follow light/dark mode.
  * Colours come from the CSS tokens in globals.css.
  */
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 const fill = (token: string): CSSProperties => ({ fill: `var(--${token})` });
 const stroke = (token: string, width = 1.5): CSSProperties => ({ stroke: `var(--${token})`, strokeWidth: width, fill: 'none' });
 const box = (bg: string, line = 'border'): CSSProperties => ({ fill: `var(--${bg})`, stroke: `var(--${line})`, strokeWidth: 1.5 });
 
+/** Card that holds an illustration. Pass margins etc. through className. */
+export function ArtFrame({ className = '', children }: { className?: string; children: ReactNode }) {
+  return <div className={`min-w-0 rounded-[18px] border border-line bg-surface-elev p-4 shadow-(--shadow) ${className}`}>{children}</div>;
+}
+
 /* ───────────── Hero: Trello → Taskvane → Sheet + Slack ───────────── */
 export function FlowDiagram() {
   return (
-    <svg className="art" viewBox="0 0 560 380" role="img" aria-labelledby="flow-title flow-desc">
+    <svg className="block h-auto w-full" viewBox="0 0 560 380" role="img" aria-labelledby="flow-title flow-desc">
       <title id="flow-title">How Taskvane connects your tools</title>
       <desc id="flow-desc">A card moved on a Trello board goes to Taskvane, which updates the Google Sheet and posts to a Slack thread.</desc>
 
@@ -53,9 +58,9 @@ export function FlowDiagram() {
       </g>
 
       {/* connectors */}
-      <path d="M180 190 H218" className="flow-dash" style={stroke('trello', 2.5)} />
-      <path d="M342 168 C 372 168, 372 96, 392 96" className="flow-dash" style={stroke('sheet', 2.5)} />
-      <path d="M342 212 C 372 212, 372 284, 392 284" className="flow-dash" style={stroke('slack', 2.5)} />
+      <path d="M180 190 H218" className="animate-dash [stroke-dasharray:6_6] motion-reduce:animate-none" style={stroke('trello', 2.5)} />
+      <path d="M342 168 C 372 168, 372 96, 392 96" className="animate-dash [stroke-dasharray:6_6] motion-reduce:animate-none" style={stroke('sheet', 2.5)} />
+      <path d="M342 212 C 372 212, 372 284, 392 284" className="animate-dash [stroke-dasharray:6_6] motion-reduce:animate-none" style={stroke('slack', 2.5)} />
       <circle cx="218" cy="190" r="4" style={fill('trello')} />
       <circle cx="392" cy="96" r="4" style={fill('sheet')} />
       <circle cx="392" cy="284" r="4" style={fill('slack')} />
@@ -103,7 +108,7 @@ export function BoardArt() {
   const lists = ['To Do', 'Assigned', 'In Progress', 'Ready for Testing', 'Completed'];
   const counts = [3, 1, 1, 1, 2];
   return (
-    <svg className="art" viewBox="0 0 520 300" role="img" aria-labelledby="board-title">
+    <svg className="block h-auto w-full" viewBox="0 0 520 300" role="img" aria-labelledby="board-title">
       <title id="board-title">A Trello board with the five status lists; a card is moved from Assigned to In Progress</title>
       <rect width="520" height="300" rx="16" style={fill('trello-soft')} />
       {lists.map((name, i) => (
@@ -148,13 +153,13 @@ export function RulesArt() {
     { icon: '✓', label: 'History row saved', tone: 'ok' },
   ];
   return (
-    <svg className="art" viewBox="0 0 520 300" role="img" aria-labelledby="rules-title">
+    <svg className="block h-auto w-full" viewBox="0 0 520 300" role="img" aria-labelledby="rules-title">
       <title id="rules-title">Taskvane records the change, checks the team rules and saves the history; a rule-breaking move is flagged</title>
       <rect width="520" height="300" rx="16" style={fill('brand-soft')} />
       <g transform="translate(24 22)">
         <rect width="472" height="176" rx="12" style={box('bg-elev')} />
         <text x="18" y="30" fontSize="13" fontWeight="800" style={fill('text')}>Event received from Trello</text>
-        <text x="454" y="30" textAnchor="end" fontSize="10" className="mono" style={fill('text-faint')}>updateCard · 0.2s</text>
+        <text x="454" y="30" textAnchor="end" fontSize="10" className="font-mono" style={fill('text-faint')}>updateCard · 0.2s</text>
         {rows.map((r, i) => (
           <g key={r.label} transform={`translate(18 ${50 + i * 30})`}>
             <circle cx="10" cy="10" r="10" style={fill(`${r.tone}-soft`)} />
@@ -183,7 +188,7 @@ export function SheetArt() {
   ];
   const xs = widths.map((_, i) => widths.slice(0, i).reduce((a, b) => a + b, 0));
   return (
-    <svg className="art" viewBox="0 0 520 300" role="img" aria-labelledby="sheet-title">
+    <svg className="block h-auto w-full" viewBox="0 0 520 300" role="img" aria-labelledby="sheet-title">
       <title id="sheet-title">The Tasks tab of the Google Sheet: the row for TASK-7 is updated to In Progress</title>
       <rect width="520" height="300" rx="16" style={fill('sheet-soft')} />
       <g transform="translate(18 20)">
@@ -199,7 +204,7 @@ export function SheetArt() {
           <g key={r[0]} transform={`translate(0 ${34 + ri * 54})`}>
             {ri === 1 && <rect x="2" y="2" width="480" height="50" rx="4" style={{ ...fill('sheet-soft'), stroke: 'var(--sheet)', strokeWidth: 1.5 }} />}
             {r.map((cell, ci) => (
-              <text key={ci} x={xs[ci] + 10} y="31" fontSize="11" className={ci === 0 ? 'mono' : undefined} style={fill(ri === 1 && ci === 2 ? 'sheet' : ci === 0 ? 'text' : 'text-soft')} fontWeight={ri === 1 && ci === 2 ? 700 : 400}>
+              <text key={ci} x={xs[ci] + 10} y="31" fontSize="11" className={ci === 0 ? 'font-mono' : undefined} style={fill(ri === 1 && ci === 2 ? 'sheet' : ci === 0 ? 'text' : 'text-soft')} fontWeight={ri === 1 && ci === 2 ? 700 : 400}>
                 {cell || '—'}
               </text>
             ))}
@@ -210,7 +215,7 @@ export function SheetArt() {
       <g transform="translate(18 230)">
         <rect width="484" height="52" rx="10" style={box('bg-elev')} />
         <text x="14" y="21" fontSize="10.5" fontWeight="700" style={fill('text-faint')}>HISTORY TAB · new row</text>
-        <text x="14" y="40" fontSize="10.5" className="mono" style={fill('text-soft')}>22:55 · TASK-7 · status · Assigned → In Progress · Athira · Trello</text>
+        <text x="14" y="40" fontSize="10.5" className="font-mono" style={fill('text-soft')}>22:55 · TASK-7 · status · Assigned → In Progress · Athira · Trello</text>
       </g>
     </svg>
   );
@@ -224,7 +229,7 @@ export function SlackArt() {
     { text: '📝 Progress note from Athira: “Root cause found”', tone: 'bg-soft' },
   ];
   return (
-    <svg className="art" viewBox="0 0 520 300" role="img" aria-labelledby="slack-title">
+    <svg className="block h-auto w-full" viewBox="0 0 520 300" role="img" aria-labelledby="slack-title">
       <title id="slack-title">The Slack channel: one message per task, with every update as a reply in its thread</title>
       <rect width="520" height="300" rx="16" style={fill('slack-soft')} />
       <g transform="translate(18 18)">

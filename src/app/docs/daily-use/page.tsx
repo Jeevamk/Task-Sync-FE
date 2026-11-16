@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Callout, DocPage, Table } from '@/components/Docs';
-import { BoardArt } from '@/components/Illustrations';
+import { ArtFrame, BoardArt } from '@/components/Illustrations';
 
 export const metadata: Metadata = { title: 'Daily use' };
 
@@ -22,9 +22,9 @@ const ROWS: [string, string][] = [
 export default function DailyUse() {
   return (
     <DocPage href="/docs/daily-use/" title="Daily use" lead="Work in Trello as you normally do. Each action below is picked up within a few seconds.">
-      <div className="art-frame" style={{ margin: '8px 0 24px' }}>
+      <ArtFrame className="mt-2 mb-6">
         <BoardArt />
-      </div>
+      </ArtFrame>
       <Table head={['You do this in Trello', 'Taskvane does this']} rows={ROWS.map(([a, b]) => [<strong key={a}>{a}</strong>, b])} />
       <p>Every change also adds a row to the History tab: when, which task, what changed, from what to what, by whom, and from where.</p>
       <Callout type="warn">

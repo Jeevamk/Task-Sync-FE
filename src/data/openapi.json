@@ -170,6 +170,34 @@
         ]
       }
     },
+    "/orgs/{orgId}/setup": {
+      "get": {
+        "operationId": "ConnectionsController_setup",
+        "parameters": [
+          {
+            "name": "orgId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Connections"
+        ]
+      }
+    },
     "/orgs/{orgId}/connections/trello/start": {
       "post": {
         "operationId": "ConnectionsController_startTrello",
@@ -201,6 +229,34 @@
     "/orgs/{orgId}/connections/slack/start": {
       "post": {
         "operationId": "ConnectionsController_startSlack",
+        "parameters": [
+          {
+            "name": "orgId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Connections"
+        ]
+      }
+    },
+    "/orgs/{orgId}/connections/google/start": {
+      "post": {
+        "operationId": "ConnectionsController_startGoogle",
         "parameters": [
           {
             "name": "orgId",
@@ -346,6 +402,7 @@
         ]
       },
       "post": {
+        "description": "New user? Send \"new\" for trelloBoard, sheet and slackChannelId and Taskvane creates all three (needs Trello, Slack and Google connected: see GET /orgs/{orgId}/setup).",
         "operationId": "ProjectsController_create",
         "parameters": [
           {
@@ -377,6 +434,7 @@
             "bearer": []
           }
         ],
+        "summary": "Create a project",
         "tags": [
           "Projects"
         ]
@@ -897,13 +955,23 @@
           },
           "sheet": {
             "type": "string",
-            "example": "https://docs.google.com/spreadsheets/d/1Qqwr…/edit",
-            "description": "Sheet link or ID"
+            "example": "new",
+            "description": "Sheet link or ID (shared with the Taskvane service account), or \"new\" to create one in your Drive (needs Connect Google)"
+          },
+          "newSheetName": {
+            "type": "string",
+            "example": "Taskvane – Website Revamp",
+            "description": "Only with sheet \"new\": the sheet name (default: \"Taskvane – <project name>\")"
           },
           "slackChannelId": {
             "type": "string",
-            "example": "C0123456789",
-            "description": "From GET …/slack/channels"
+            "example": "new",
+            "description": "Channel ID from GET …/slack/channels, or \"new\" to create a public channel"
+          },
+          "newChannelName": {
+            "type": "string",
+            "example": "website-revamp",
+            "description": "Only with slackChannelId \"new\": the channel name (default: the project name, e.g. \"website-revamp\")"
           },
           "extraLists": {
             "example": [

@@ -28,7 +28,8 @@ export default function Cards() {
           backend’s <code>SHEET_SYNC_SECRET</code>).
         </li>
         <li>
-          Reload the sheet. In the new <strong>Taskvane</strong> menu, click <strong>Set up Import tab</strong>.
+          Reload the sheet. In the new <strong>Taskvane</strong> menu, click <strong>Set up Import tab</strong>. (A sheet Taskvane created with{' '}
+          <code>sheet: &quot;new&quot;</code> already has the Import tab; running it again is safe.)
         </li>
       </ol>
 

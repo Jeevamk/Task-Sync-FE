@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Callout, DocPage, Table } from '@/components/Docs';
-import { RulesArt } from '@/components/Illustrations';
+import { ArtFrame, RulesArt } from '@/components/Illustrations';
 
 export const metadata: Metadata = { title: 'Team rules' };
 
@@ -24,9 +24,9 @@ export default function Rules() {
       <p>
         Any other move (for example To Do → Completed), or a move by someone <strong>not in the team list</strong>, breaks the rules.
       </p>
-      <div className="art-frame" style={{ margin: '24px 0' }}>
+      <ArtFrame className="my-6">
         <RulesArt />
-      </div>
+      </ArtFrame>
       <p>
         Trello cannot block a move, so Taskvane <strong>applies it anyway and flags it</strong>: the Slack update ends with{' '}
         <em>“⚠️ This move is not allowed by the team rules — coordinator, please check.”</em> and the History records it.

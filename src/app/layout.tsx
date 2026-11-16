@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body>
-        <a href="#main" className="visually-hidden">
+        <a href="#main" className="sr-only">
           Skip to content
         </a>
         <SiteHeader />

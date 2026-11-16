@@ -10,14 +10,14 @@ export default function ApiPage() {
   const sections = endpointsBySection();
   const count = sections.reduce((n, s) => n + s.endpoints.length, 0);
   return (
-    <article className="prose" style={{ maxWidth: 'none' }}>
+    <article className="prose max-w-none">
       <h1>API reference</h1>
-      <p className="lead">
-        All {count} endpoints of the {apiInfo.title} (v{apiInfo.version}), with their fields, rules and examples. Request fields come straight from the backend’s own API
+      <p className="text-lg">
+        All {count} endpoints of the {apiInfo.title}, with their fields, rules and examples. Request fields come straight from the backend’s own API
         description, so they always match the code.
       </p>
 
-      <h2 style={{ marginTop: 24 }}>Authentication</h2>
+      <h2 className="mt-6">Authentication</h2>
       <ul>
         <li>
           <strong>Bearer token</strong>: most endpoints. Get a token from <code>POST /auth/dev-login</code> or <code>POST /auth/google</code>, then send{' '}
