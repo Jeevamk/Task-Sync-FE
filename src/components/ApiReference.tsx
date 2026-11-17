@@ -109,6 +109,25 @@ function EndpointCard({ e, open }: { e: Endpoint; open: boolean }) {
         </p>
         {e.description && <p>{e.description}</p>}
 
+        {e.note?.guide?.map((g) => (
+          <div key={g.title} className="my-5 rounded-lg border border-line bg-surface-soft px-4 py-3">
+            <h4 className={h4}>{g.title}</h4>
+            {g.intro && (
+              <p className="text-[14.5px]">
+                <Rich text={g.intro} />
+              </p>
+            )}
+            <ol className="mb-2 list-decimal space-y-1.5 pl-5 text-[14.5px]">
+              {g.steps.map((s) => (
+                <li key={s}>
+                  <Rich text={s} />
+                </li>
+              ))}
+            </ol>
+            {g.code && <CodeBlock lang={g.code.lang} title={g.code.title} code={g.code.code} />}
+          </div>
+        ))}
+
         {e.params.length > 0 && (
           <>
             <h4 className={h4}>Parameters</h4>
@@ -169,6 +188,24 @@ function EndpointCard({ e, open }: { e: Endpoint; open: boolean }) {
         )}
       </div>
     </details>
+  );
+}
+
+/** Plain text with `code` spans and clickable https:// links (for guide steps). */
+function Rich({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(`[^`]+`|https:\/\/[^\s)]+)/g).map((part, i) => {
+        if (part.startsWith('`')) return <code key={i}>{part.slice(1, -1)}</code>;
+        if (part.startsWith('https://'))
+          return (
+            <a key={i} href={part} target="_blank" rel="noreferrer">
+              {part.replace('https://', '')}
+            </a>
+          );
+        return part;
+      })}
+    </>
   );
 }
 

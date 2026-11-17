@@ -12,6 +12,15 @@ export type ApiNote = {
   response?: unknown;
   /** Short tips shown under the endpoint. */
   tips?: string[];
+  /** Step-by-step how-tos shown under the description. `code` in backticks and https:// links are rendered. */
+  guide?: GuideBlock[];
+};
+
+export type GuideBlock = {
+  title: string;
+  intro?: string;
+  steps: string[];
+  code?: { lang: 'json' | 'bash' | 'text'; title: string; code: string };
 };
 
 export const SECTION_ORDER = ['Login', 'Organizations', 'Connections', 'Team', 'Projects', 'Cards', 'Sheets', 'Webhooks', 'Health'];
@@ -55,8 +64,30 @@ export const API_NOTES: Record<string, ApiNote> = {
   'POST /auth/google': {
     section: 'Login',
     summary: 'Log in with Google',
-    description: 'Send the ID token from Google Sign-In (used by the web app). Returns the same token as dev login.',
+    description:
+      'Send a Google ID token and get a Taskvane token back (the same kind as dev login). The ID token must be issued for this server’s Google OAuth client (GOOGLE_OAUTH_CLIENT_ID), otherwise the answer is 401. It is valid for about 1 hour, so get a fresh one right before you call this.',
+    bodyExample: { idToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6…' },
     response: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…', user: { id: '11111111-…', email: 'you@company.com', name: 'Your Name' } },
+    guide: [
+      {
+        title: 'How to get the ID token (Google OAuth Playground)',
+        intro:
+          'You need the server’s Google OAuth client ID and secret (GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET in the backend .env). If you don’t run the server, ask its admin, or use dev login.',
+        steps: [
+          'One-time setup: in Google Cloud Console → APIs & Services → Credentials, open that OAuth client and add `https://developers.google.com/oauthplayground` under Authorized redirect URIs. Save.',
+          'Open https://developers.google.com/oauthplayground and click the ⚙ gear (top right). Tick `Use your own OAuth credentials` and paste the client ID and client secret.',
+          'In Step 1, type `openid email profile` in the box at the bottom of the list (Input your own scopes) and click `Authorize APIs`.',
+          'Pick your Google account and click `Allow` (or `Continue`).',
+          'In Step 2, click `Exchange authorization code for tokens`.',
+          'In the response on the right, copy the value of `id_token` (the long string starting with `eyJ`). Do not use `access_token`: that one is rejected.',
+          'Send it here as `{ "idToken": "eyJ…" }`. Then copy `token` from the response and click Authorize in Swagger (or send `Authorization: Bearer <token>`).',
+        ],
+      },
+    ],
+    tips: [
+      '401 "Google sign-in could not be verified": the ID token expired (older than about 1 hour) or was made with a different client ID (e.g. the Playground’s default credentials). Get a new one with the server’s client ID.',
+      'Testing locally? POST /auth/dev-login is simpler when ALLOW_DEV_LOGIN=true.',
+    ],
   },
   'GET /auth/me': {
     section: 'Login',
