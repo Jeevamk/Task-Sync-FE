@@ -68,6 +68,49 @@
         ]
       }
     },
+    "/sheet-template": {
+      "get": {
+        "description": "For using your own sheet instead of sheet \"new\". Default: an .xlsx with the Tasks, History and Import tabs; in Google Sheets use File → Import → Upload (or upload it to Drive and open it with Google Sheets). format=csv&tab=tasks|history|import gives one tab's header row as CSV.",
+        "operationId": "SheetTemplateController_download",
+        "parameters": [
+          {
+            "name": "tab",
+            "required": false,
+            "in": "query",
+            "description": "Only with format=csv (default: tasks)",
+            "schema": {
+              "enum": [
+                "tasks",
+                "history",
+                "import"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "xlsx",
+                "csv"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Download the sample Google Sheet (headers only)",
+        "tags": [
+          "Sheets"
+        ]
+      }
+    },
     "/orgs": {
       "post": {
         "operationId": "OrgsController_create",
@@ -956,7 +999,7 @@
           "sheet": {
             "type": "string",
             "example": "new",
-            "description": "Sheet link or ID (shared with the Taskvane service account), or \"new\" to create one in your Drive (needs Connect Google)"
+            "description": "Sheet link or ID (shared with the Taskvane service account; sample with the headers: GET /sheet-template), or \"new\" to create one in your Drive (needs Connect Google)"
           },
           "newSheetName": {
             "type": "string",

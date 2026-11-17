@@ -19,7 +19,7 @@ const ROWS: [string, string][] = [
   ['… Already created: sheet …, Slack channel …', 'A later step failed. Fix the cause, then retry with the sheet and slackChannelId values in the message instead of "new".'],
   ['Warning: you were not found in the Slack workspace', 'Your login email is not a member of that Slack workspace. Join the new channel yourself.'],
   ['Google Sheets 403 … share the sheet with …', 'Share the sheet with the shareWith email as Editor.'],
-  ['The sheet needs a "Tasks" tab / a "Task ID" header', 'Fix the tab name and row 1. Names must match exactly.'],
+  ['The sheet needs a "Tasks" tab / a "Task ID" header', 'Fix the tab name and row 1 (names must match exactly), or start from the sample sheet: Set up your team, step 5, Download sample sheet.'],
   ['This sheet is already used by a project', 'Use a separate sheet per project.'],
   ['Slack channel not found / Invite the bot …', 'Private channel: type /invite @Taskvane in it, then try again.'],
   ['The board is missing these lists', 'Rename the lists in Trello, send "lists" with your names, or send "createMissingLists": true.'],

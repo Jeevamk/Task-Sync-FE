@@ -172,14 +172,15 @@ export default function Home() {
 
       <section className="py-[72px]">
         <div className="wrap">
-          <div className="rounded-[20px] bg-linear-135 from-brand to-[color-mix(in_srgb,var(--slack)_80%,var(--brand))] px-6 py-14 text-center text-white">
+          <div className="hero-glow rounded-[20px] border border-line px-6 py-14 text-center shadow-(--shadow)">
+            <span className="mb-2.5 block text-[12.5px] font-bold tracking-[0.12em] text-brand uppercase">Get started</span>
             <h2 className="text-[clamp(26px,3.4vw,36px)] font-extrabold">Ready to stop copying status by hand?</h2>
-            <p className="mx-auto mb-6 max-w-[560px] opacity-90">Follow the setup guide, or explore every endpoint in the API reference.</p>
+            <p className="mx-auto mb-6 max-w-[560px] text-[17px] text-fg-soft">Follow the setup guide, or explore every endpoint in the API reference.</p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link href="/docs/setup/" className={`${btn} ${btnLg} border-transparent bg-white text-[#312e81]`}>
+              <Link href="/docs/setup/" className={`${btn} ${btnLg} ${btnPrimary}`}>
                 Read the setup guide
               </Link>
-              <Link href="/docs/api/" className={`${btn} ${btnLg} border-white/50 bg-transparent text-white`}>
+              <Link href="/docs/api/" className={`${btn} ${btnLg} ${btnGhost}`}>
                 Browse the API
               </Link>
             </div>

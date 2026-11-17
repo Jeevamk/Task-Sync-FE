@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 import { json } from '@/lib/json';
 import { Callout, DocPage, Endpoint, Table } from '@/components/Docs';
+import { SheetTemplateDownload } from '@/components/SheetTemplateDownload';
 
 export const metadata: Metadata = { title: 'Set up your team' };
 
@@ -24,7 +25,7 @@ const STEPS: [string, string, string, string | null][] = [
   ['step-2', 'Create your organization', 'Copy its id: this is your orgId.', null],
   ['step-3', 'Connect Trello', 'Open the link, click Allow.', SIGNUP.trello],
   ['step-4', 'Connect Slack', 'Open the link, pick the workspace, click Allow.', SIGNUP.slack],
-  ['step-5', 'Google Sheet', 'Connect Google (Taskvane makes the sheet), or share your own sheet.', SIGNUP.google],
+  ['step-5', 'Google Sheet', 'Connect Google (Taskvane makes the sheet), or share your own (sample sheet to download).', SIGNUP.google],
   ['step-6', 'Slack channel', 'Let Taskvane create it, or pick an existing one.', null],
   ['step-7', 'Add your team', 'Each person with their role and Trello username.', null],
   ['step-8', 'Create a project', 'One request. Cards are imported straight away.', null],
@@ -232,27 +233,32 @@ export default function Setup() {
 
           <h4>Option B: use your own sheet</h4>
           <ol>
-            <li>Create a new Google Sheet.</li>
             <li>
-              Add a tab named exactly <strong>Tasks</strong>. In row 1, put the column headers you want. Only <code>Task ID</code> is required; Taskvane fills these when
-              they exist, in any order:
-              <CodeBlock lang="text" title="Tasks tab, row 1" code={TASKS_COLUMNS} />
-              Columns with other names (your notes, formulas) are never overwritten.
+              Download the sample sheet:
+              <SheetTemplateDownload />
             </li>
             <li>
-              Add a tab named <strong>History</strong> (recommended), with this row 1:
-              <CodeBlock lang="text" title="History tab, row 1" code={HISTORY_COLUMNS} />
+              Open <a href="https://sheets.new" target="_blank" rel="noreferrer">a new Google Sheet</a>, click <strong>File → Import → Upload</strong>, pick the file and
+              choose <strong>Replace spreadsheet</strong>. (Or upload the file to Google Drive and pick <strong>Open with → Google Sheets</strong>.)
             </li>
             <li>
-              Get the Taskvane email from <Endpoint method="GET" path="/orgs/{orgId}" /> (<code>googleSheets.shareWith</code>), click <strong>Share</strong> in the sheet
-              and add it as <strong>Editor</strong>.
+              Click <strong>Share</strong> and add the Taskvane email as <strong>Editor</strong>. The email is <code>googleSheets.shareWith</code> in{' '}
+              <Endpoint method="GET" path="/orgs/{orgId}" />.
             </li>
+            <li>Copy the sheet link from the address bar: that is your <code>sheet</code> in step 8.</li>
           </ol>
-          <CodeBlock
-            lang="json"
-            title="GET /orgs/{orgId} (part)"
-            code={json({ googleSheets: { shareWith: 'taskvane@your-project.iam.gserviceaccount.com', howTo: 'Share your tracker sheet with this email as Editor' } })}
-          />
+          <details className="my-4">
+            <summary className="cursor-pointer font-semibold">Prefer to type the headers yourself?</summary>
+            <p>
+              Add a tab named exactly <strong>Tasks</strong>. Only <code>Task ID</code> is required in row 1; Taskvane fills the other columns when they exist, in any
+              order. Columns with other names (your notes, formulas) are never overwritten.
+            </p>
+            <CodeBlock lang="text" title="Tasks tab, row 1" code={TASKS_COLUMNS} />
+            <p>
+              A <strong>History</strong> tab is recommended:
+            </p>
+            <CodeBlock lang="text" title="History tab, row 1" code={HISTORY_COLUMNS} />
+          </details>
           <Callout>
             Either way, the Import tab’s <strong>Taskvane</strong> menu (creating cards from the sheet) needs the Apps Script pasted in by hand once. See{' '}
             <Link href="/docs/cards/">Creating cards</Link>.

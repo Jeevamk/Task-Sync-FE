@@ -27,7 +27,11 @@ export const SECTION_INFO: Record<string, { title: string; intro: string }> = {
   Team: { title: 'Team', intro: 'The people who work on your boards and their role. Taskvane uses this list to recognise who moved a card.' },
   Projects: { title: 'Projects', intro: 'A project links one Trello board to one Google Sheet and one Slack channel.' },
   Cards: { title: 'Cards', intro: 'Create Trello cards from your own tools. They then sync like any card made in Trello.' },
-  Sheets: { title: 'Sheet import', intro: 'Called by the Apps Script inside the Google Sheet (Import tab). Authenticated with the X-Sync-Secret header.' },
+  Sheets: {
+    title: 'Sheets',
+    intro:
+      'The sample sheet to download (no login), and the import called by the Apps Script inside the Google Sheet (Import tab), authenticated with the X-Sync-Secret header.',
+  },
   Webhooks: { title: 'Trello webhook', intro: 'Called by Trello only. Every request is signed by Trello; manual calls get 401.' },
   Health: { title: 'Health', intro: 'For monitoring.' },
 };
@@ -289,7 +293,18 @@ export const API_NOTES: Record<string, ApiNote> = {
     ],
   },
 
-  // ── Sheet import ──
+  // ── Sheets ──
+  'GET /sheet-template': {
+    section: 'Sheets',
+    summary: 'Download the sample sheet',
+    description:
+      'An .xlsx with the Tasks, History and Import tabs, headers in row 1 (bold, frozen). For using your own sheet instead of sheet "new". No login needed.',
+    status: '200 (file download)',
+    tips: [
+      'In Google Sheets: File → Import → Upload → Replace spreadsheet. Then share the sheet with googleSheets.shareWith as Editor.',
+      'format=csv&tab=tasks (or history, import) gives one tab’s header row as CSV.',
+    ],
+  },
   'POST /webhooks/sheets/import': {
     section: 'Sheets',
     summary: 'Create Trello cards from sheet rows',
