@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { ApiReference } from '@/components/ApiReference';
-import { Callout } from '@/components/Docs';
 import { apiInfo, endpointsBySection } from '@/lib/openapi';
-import { API_URL } from '@/lib/site';
 
 export const metadata: Metadata = { title: 'API reference' };
 
@@ -13,37 +12,24 @@ export default function ApiPage() {
     <article className="prose max-w-none">
       <h1>API reference</h1>
       <p className="text-lg">
-        All {count} endpoints of the {apiInfo.title}, with their fields, rules and examples. Request fields come straight from the backend’s own API
-        description, so they always match the code.
+        Try all {count} endpoints of the {apiInfo.title} right here: no extra tools needed.
       </p>
 
-      <h2 className="mt-6">Authentication</h2>
-      <ul>
+      <ol className="mt-2">
         <li>
-          <strong>Bearer token</strong>: most endpoints. Get a token from <code>POST /auth/dev-login</code> or <code>POST /auth/google</code>, then send{' '}
-          <code>Authorization: Bearer &lt;token&gt;</code>. Every <code>/orgs/{'{orgId}'}/…</code> route also checks that you belong to that organization (403 otherwise).
+          <strong>Authorize</strong>: <Link href="/login/">sign in with Google</Link> (the token is picked up automatically) or paste a token below.
         </li>
         <li>
-          <strong>X-Sync-Secret</strong>: only the sheet import, called by the Apps Script.
+          <strong>Pick an endpoint</strong> from the list, fill in its fields and press <strong>Send</strong>. The real response appears right under it.
         </li>
         <li>
-          <strong>Trello signature</strong>: only the Trello webhook, signed by Trello itself.
+          IDs you create (organization, project, team member) are remembered and filled in for the next requests.
         </li>
-      </ul>
-
-      <h2>Errors</h2>
-      <p>
-        Errors return a JSON body with a readable <code>message</code>, for example{' '}
-        <code>{'{ "statusCode": 400, "message": "title is required", "error": "Bad Request" }'}</code>. Validation errors also list <code>errors</code> per field.
+      </ol>
+      <p className="text-[14.5px] text-fg-soft">
+        Errors come back as JSON with a readable <code>message</code>, e.g. <code>{'{ "statusCode": 400, "message": "title is required" }'}</code>. Every{' '}
+        <code>/orgs/{'{orgId}'}/…</code> route also checks that you belong to that organization (403 otherwise).
       </p>
-
-      <Callout>
-        Try requests live in the interactive docs at{' '}
-        <a href={`${API_URL}/docs`} target="_blank" rel="noreferrer">
-          <code>{API_URL}/docs</code>
-        </a>{' '}
-        (click Authorize and paste your token).
-      </Callout>
 
       <ApiReference sections={sections} />
     </article>

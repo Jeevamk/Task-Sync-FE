@@ -58,21 +58,20 @@ export default function GettingStarted() {
 
       <h2>How to send the requests</h2>
       <p>
-        Until the web app is ready, setup uses the interactive API page at{' '}
-        <a href={`${API_URL}/docs`} target="_blank" rel="noreferrer">
-          <code>&lt;API&gt;/docs</code>
-        </a>
-        :
+        Until the web app is ready, setup is done from the <Link href="/docs/api/">API reference</Link> page on this site:
       </p>
       <ol>
-        <li>Open the page and click an endpoint, for example <code>POST /orgs</code>.</li>
         <li>
-          Click <strong>Try it out</strong>, fill the parameters and the body, then click <strong>Execute</strong>.
+          <Link href="/login/">Sign in with Google</Link>. The API page picks up your token by itself.
         </li>
-        <li>The response appears under it.</li>
+        <li>Pick an endpoint from the list, for example <code>POST /orgs</code>, and fill in its fields.</li>
+        <li>
+          Click <strong>Send</strong>. The response appears under it.
+        </li>
       </ol>
       <Callout>
-        Every request can also be sent with <code>curl</code> or Postman. After logging in, add the header <code>Authorization: Bearer &lt;your token&gt;</code>. Each
+        Every request can also be sent with <code>curl</code> or Postman. After you <Link href="/login/">sign in</Link>, add the header{' '}
+        <code>Authorization: Bearer &lt;your token&gt;</code>. Each
         endpoint, with its fields and an example, is in the <Link href="/docs/api/">API reference</Link>.
       </Callout>
     </DocPage>

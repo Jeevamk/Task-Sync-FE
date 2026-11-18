@@ -36,6 +36,13 @@ export function SiteHeader() {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/login/"
+            className="rounded-lg px-2.5 py-1.5 text-[14.5px] font-medium whitespace-nowrap text-fg-soft hover:bg-surface-soft hover:text-fg hover:no-underline aria-[current=page]:bg-surface-soft aria-[current=page]:text-fg"
+            aria-current={path.startsWith('/login') ? 'page' : undefined}
+          >
+            Sign in
+          </Link>
           <Link href="/docs/setup/" className={`${btn} ${btnPrimary} ml-1.5 rounded-lg px-3.5 py-[7px] text-sm whitespace-nowrap`}>
             Get started
           </Link>

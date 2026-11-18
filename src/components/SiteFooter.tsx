@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { API_URL } from '@/lib/site';
 import { LogoMark } from './Logo';
 
 export function SiteFooter() {
@@ -17,9 +16,6 @@ export function SiteFooter() {
           <Link href="/docs/setup/">Setup guide</Link>
           <Link href="/docs/api/">API reference</Link>
           <Link href="/docs/troubleshooting/">Troubleshooting</Link>
-          <a href={`${API_URL}/docs`} target="_blank" rel="noreferrer">
-            Live API (Swagger)
-          </a>
         </nav>
       </div>
     </footer>

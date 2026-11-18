@@ -4,7 +4,15 @@ import { DocPage, Table } from '@/components/Docs';
 export const metadata: Metadata = { title: 'Troubleshooting' };
 
 const ROWS: [string, string][] = [
-  ['401 Unauthorized on /orgs/…', 'Not logged in or the token expired (7 days). Log in again and click Authorize.'],
+  ['401 Unauthorized on /orgs/…', 'Not signed in, or the token expired (7 days). Sign in again on the Sign in page; the API page picks up the new token.'],
+  ['Sign in: “Google sign-in is not set up on this site yet”', 'The site was built without NEXT_PUBLIC_GOOGLE_CLIENT_ID. Whoever runs Taskvane sets it and redeploys the site (see the FE README).'],
+  ['Sign in: “Could not reach the Taskvane API at …”', 'The API is offline, or it does not accept this site: its WEB_APP_URL must be exactly this site’s address (no / at the end). Fix it and redeploy the API.'],
+  ['Sign in: Google shows “Error 400: origin_mismatch” or “The given origin is not allowed”', 'This site’s address is missing from the OAuth client’s Authorized JavaScript origins in Google Cloud Console. Add it; it can take a few minutes to apply.'],
+  ['Sign in: “Google sign-in could not be verified”', 'The site and the API use different Google client IDs: NEXT_PUBLIC_GOOGLE_CLIENT_ID (site) must equal GOOGLE_OAUTH_CLIENT_ID (API). Developers testing by hand: the ID token expired (about 1 hour) or came from another client.'],
+  ['Dev login is disabled', 'Expected on the live API (production). Use the Sign in page instead.'],
+  ['403 “This access token is read-only”', 'The tv_pat_ token has scope read, which only allows GET requests. Create one with scope "read+write" for changes.'],
+  ['401 “This access token is invalid, expired or revoked”', 'Create a new access token (POST /auth/tokens) and use it instead. GET /auth/tokens shows which ones are still active.'],
+  ['403 “Manage tokens while logged in …”', 'Creating, listing and revoking access tokens needs your login token from the Sign in page, not an access token.'],
   ['403 on an organization', 'You are not a member of that organization. Check the orgId with GET /orgs.'],
   ['Connect Trello first / Add Taskvane to Slack first', 'Connect Trello or Slack for this organization (setup steps 3 and 4). No account yet? The start response has a free signupUrl (see Set up your team).'],
   ['This connect link expired', 'Connect links last 10 minutes and work once. Start the step again.'],

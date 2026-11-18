@@ -21,7 +21,7 @@ const SIGNUP = {
 
 /** The eight steps, in order: [anchor, title, short "what to do", signup link if an outside account is needed]. */
 const STEPS: [string, string, string, string | null][] = [
-  ['step-1', 'Log in', 'Get a token and click Authorize.', null],
+  ['step-1', 'Sign in', 'Sign in with Google. The API page uses your token automatically.', null],
   ['step-2', 'Create your organization', 'Copy its id: this is your orgId.', null],
   ['step-3', 'Connect Trello', 'Open the link, click Allow.', SIGNUP.trello],
   ['step-4', 'Connect Slack', 'Open the link, pick the workspace, click Allow.', SIGNUP.slack],
@@ -134,13 +134,21 @@ export default function Setup() {
       <ol className="list-none p-0 [counter-reset:step]">
         <Step n={1}>
           <p>
-            While testing, use <Endpoint method="POST" path="/auth/dev-login" /> (only when the server has <code>ALLOW_DEV_LOGIN=true</code> and is not in production). The
-            web app uses <Endpoint method="POST" path="/auth/google" />.
+            Open <Link href="/login/">Sign in</Link> and click <strong>Sign in with Google</strong>. The page shows your <strong>token</strong> with a Copy button.
+            No Google account? Create one free at{' '}
+            <a href="https://accounts.google.com/signup" target="_blank" rel="noreferrer">
+              accounts.google.com/signup
+            </a>
+            .
+          </p>
+          <p>
+            Running the API yourself for testing? <Endpoint method="POST" path="/auth/dev-login" /> works too (only when the server has <code>ALLOW_DEV_LOGIN=true</code>{' '}
+            and is not in production):
           </p>
           <CodeBlock lang="json" title="Request body" code={json({ email: 'you@company.com', name: 'Your Name' })} />
           <CodeBlock lang="json" title="Response" code={json({ token: 'eyJhbGciOi…', user: { id: '…', email: 'you@company.com', name: 'Your Name' } })} />
           <p>
-            Copy the <strong>token</strong>. On the <code>/docs</code> page, click <strong>Authorize</strong>, paste it and confirm. It is valid for <strong>7 days</strong>.
+            The <Link href="/docs/api/">API reference</Link> page now uses your <strong>token</strong> automatically (it shows <em>Authorized as …</em>). It is valid for <strong>7 days</strong>.
           </p>
           <Callout>
             Use the <strong>same email as your Slack account</strong> if you can: in step 8 Taskvane invites you to a new Slack channel by this email.

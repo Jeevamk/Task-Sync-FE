@@ -46,7 +46,7 @@ const FEATURES = [
 ];
 
 const SETUP = [
-  ['Log in', 'Google sign-in, or dev login while testing.'],
+  ['Sign in', 'One click with your Google account. No password to create.'],
   ['Create your organization', 'Your team’s private space.'],
   ['Connect Trello', 'One click, then Allow.'],
   ['Add Taskvane to Slack', 'Pick your workspace, then Allow.'],

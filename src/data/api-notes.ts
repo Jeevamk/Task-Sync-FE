@@ -26,7 +26,11 @@ export type GuideBlock = {
 export const SECTION_ORDER = ['Login', 'Organizations', 'Connections', 'Team', 'Projects', 'Cards', 'Sheets', 'Webhooks', 'Health'];
 
 export const SECTION_INFO: Record<string, { title: string; intro: string }> = {
-  Login: { title: 'Login', intro: 'Get a token. Send it on every other request as  Authorization: Bearer <token>. Tokens are valid for 7 days.' },
+  Login: {
+    title: 'Login and access tokens',
+    intro:
+      'Sign in with Google on the Sign in page (/login/) to get a token, valid for 7 days. Send it on every other request as  Authorization: Bearer <token>. For scripts and MCP clients, create a longer-lived access token (tv_pat_…) below.',
+  },
   Organizations: { title: 'Organizations', intro: 'An organization is your team. Its Trello, Slack, team list and projects are never visible to other organizations.' },
   Connections: {
     title: 'Connections',
@@ -58,19 +62,20 @@ export const API_NOTES: Record<string, ApiNote> = {
   'POST /auth/dev-login': {
     section: 'Login',
     summary: 'Log in with an email (testing only)',
-    description: 'Creates the user on first use. Only works when the server has ALLOW_DEV_LOGIN=true and is not in production.',
+    description:
+      'Creates the user on first use. Only works when the server has ALLOW_DEV_LOGIN=true and is not in production, so it is off on the live API: everyone else uses the Sign in page.',
     response: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…', user: { id: '11111111-…', email: 'you@example.com', name: 'Your Name' } },
   },
   'POST /auth/google': {
     section: 'Login',
     summary: 'Log in with Google',
     description:
-      'Send a Google ID token and get a Taskvane token back (the same kind as dev login). The ID token must be issued for this server’s Google OAuth client (GOOGLE_OAUTH_CLIENT_ID), otherwise the answer is 401. It is valid for about 1 hour, so get a fresh one right before you call this.',
+      'What the Sign in page (/login/) calls for you. Send a Google ID token and get a Taskvane token back (the same kind as dev login). The ID token must be issued for this server’s Google OAuth client (GOOGLE_OAUTH_CLIENT_ID), otherwise the answer is 401. It is valid for about 1 hour, so get a fresh one right before you call this.',
     bodyExample: { idToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6…' },
     response: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…', user: { id: '11111111-…', email: 'you@company.com', name: 'Your Name' } },
     guide: [
       {
-        title: 'How to get the ID token (Google OAuth Playground)',
+        title: 'For developers: get an ID token by hand (Google OAuth Playground)',
         intro:
           'You need the server’s Google OAuth client ID and secret (GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET in the backend .env). If you don’t run the server, ask its admin, or use dev login.',
         steps: [
@@ -80,11 +85,12 @@ export const API_NOTES: Record<string, ApiNote> = {
           'Pick your Google account and click `Allow` (or `Continue`).',
           'In Step 2, click `Exchange authorization code for tokens`.',
           'In the response on the right, copy the value of `id_token` (the long string starting with `eyJ`). Do not use `access_token`: that one is rejected.',
-          'Send it here as `{ "idToken": "eyJ…" }`. Then copy `token` from the response and click Authorize in Swagger (or send `Authorization: Bearer <token>`).',
+          'Send it here as `{ "idToken": "eyJ…" }`. The token in the response is put into Authorization above automatically (elsewhere, send `Authorization: Bearer <token>`).',
         ],
       },
     ],
     tips: [
+      'Easiest: open the Sign in page of this site (/login/) and click Sign in with Google. It calls this endpoint for you and shows your token. The steps above are only for developers testing the API directly.',
       '401 "Google sign-in could not be verified": the ID token expired (older than about 1 hour) or was made with a different client ID (e.g. the Playground’s default credentials). Get a new one with the server’s client ID.',
       'Testing locally? POST /auth/dev-login is simpler when ALLOW_DEV_LOGIN=true.',
     ],
@@ -94,6 +100,47 @@ export const API_NOTES: Record<string, ApiNote> = {
     summary: 'Who am I',
     description: 'The logged-in user and the organizations they belong to.',
     response: { id: '11111111-…', email: 'you@company.com', name: 'Your Name', organizations: [{ id: ORG, name: 'Acme Dev Team', role: 'OWNER' }] },
+  },
+  'POST /auth/tokens': {
+    section: 'Login',
+    summary: 'Create an access token',
+    status: '201',
+    description:
+      'A long-lived token for scripts and MCP clients (Claude Desktop, Claude Code), which the 7-day login token does not suit. Send it like the login token: Authorization: Bearer tv_pat_…. The full token is in this response only: copy it now. Taskvane stores only a hash of it.',
+    bodyExample: { name: 'Claude Desktop', scope: 'read', expiresInDays: 90 },
+    response: {
+      token: 'tv_pat_Xy3k9…',
+      id: '55555555-…',
+      name: 'Claude Desktop',
+      prefix: 'tv_pat_Xy3k',
+      scope: 'read',
+      status: 'active',
+      createdAt: '2026-11-18T10:00:00.000Z',
+      lastUsedAt: null,
+      expiresAt: '2027-02-16T10:00:00.000Z',
+      revokedAt: null,
+    },
+    tips: [
+      'scope "read" (the default) may only make GET requests; anything else answers 403 "This access token is read-only". Use "read+write" to make changes.',
+      'expiresInDays: 1 to 365, default 90. Send null for a token that never expires.',
+      'Create, list and revoke tokens with your login token (from the Sign in page). An access token cannot manage tokens, so a leaked read-only token can never give itself more rights.',
+      'At most 20 active tokens per person.',
+    ],
+  },
+  'GET /auth/tokens': {
+    section: 'Login',
+    summary: 'List your access tokens',
+    description: 'Active, expired and revoked tokens, newest first, with when each was last used. Never shows the tokens themselves.',
+    response: [
+      { id: '55555555-…', name: 'Claude Desktop', prefix: 'tv_pat_Xy3k', scope: 'read', status: 'active', createdAt: '2026-11-18T10:00:00.000Z', lastUsedAt: '2026-11-18T11:42:00.000Z', expiresAt: '2027-02-16T10:00:00.000Z', revokedAt: null },
+    ],
+  },
+  'DELETE /auth/tokens/{tokenId}': {
+    section: 'Login',
+    summary: 'Revoke an access token',
+    description: 'The token stops working immediately. Revoking a token twice is fine.',
+    response: { id: '55555555-…', name: 'Claude Desktop', prefix: 'tv_pat_Xy3k', scope: 'read', status: 'revoked', revokedAt: '2026-11-18T12:00:00.000Z' },
+    tips: ['Lost a token or not sure where it is used? Revoke it and create a new one.'],
   },
 
   // ── Organizations ──

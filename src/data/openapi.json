@@ -68,6 +68,80 @@
         ]
       }
     },
+    "/auth/tokens": {
+      "post": {
+        "operationId": "ApiTokensController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Login"
+        ]
+      },
+      "get": {
+        "operationId": "ApiTokensController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Login"
+        ]
+      }
+    },
+    "/auth/tokens/{tokenId}": {
+      "delete": {
+        "operationId": "ApiTokensController_revoke",
+        "parameters": [
+          {
+            "name": "tokenId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Login"
+        ]
+      }
+    },
     "/sheet-template": {
       "get": {
         "description": "For using your own sheet instead of sheet \"new\". Default: an .xlsx with the Tasks, History and Import tabs; in Google Sheets use File → Import → Upload (or upload it to Drive and open it with Google Sheets). format=csv&tab=tasks|history|import gives one tab's header row as CSV.",
@@ -959,6 +1033,38 @@
         },
         "required": [
           "email"
+        ]
+      },
+      "CreateApiTokenDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Claude Desktop",
+            "description": "A name to recognise the token by, e.g. where you use it",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "read",
+              "read+write"
+            ],
+            "default": "read",
+            "description": "`read`: GET requests only. `read+write`: everything you may do yourself."
+          },
+          "expiresInDays": {
+            "type": "object",
+            "example": 90,
+            "nullable": true,
+            "minimum": 1,
+            "maximum": 365,
+            "description": "Days until the token stops working. Leave out for 90; send null for a token that never expires."
+          }
+        },
+        "required": [
+          "name"
         ]
       },
       "CreateOrgDto": {

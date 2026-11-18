@@ -33,9 +33,24 @@ npm start                      # preview ./out on http://localhost:3001
 
 | Variable | Used for | Default |
 | --- | --- | --- |
-| `NEXT_PUBLIC_API_URL` | The "Live API (Swagger)" links, e.g. `https://task-sync-api.vercel.app` (no `/` at the end) | `http://localhost:3000` |
+| `NEXT_PUBLIC_API_URL` | The API this site calls (sign-in) and links to (live Swagger), e.g. `https://task-sync-api.vercel.app` (no `/` at the end) | `http://localhost:3000` |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | The "Sign in with Google" button on `/login/`. The **same** client ID as `GOOGLE_OAUTH_CLIENT_ID` in the API | empty (the sign-in page says it is not set up) |
 
-It is read **at build time**. Set it in your host's environment settings before building.
+Both are read **at build time**. Set them in your host's environment settings, then build (or redeploy) again.
+
+## Sign in with Google (one-time setup, for whoever runs Taskvane)
+
+Users only click **Sign in with Google** on `/login/`. They never need a client ID, a secret or Vercel. To make the button work:
+
+1. **Google Cloud Console → APIs & Services → Credentials** → open the OAuth client (type *Web application*) whose ID is in the API's `GOOGLE_OAUTH_CLIENT_ID`.
+2. Under **Authorized JavaScript origins**, add this site's addresses, without a path or `/` at the end:
+   - `http://localhost:3001` and `http://localhost` (local)
+   - your live address, e.g. `https://taskvane.vercel.app`
+3. Set `NEXT_PUBLIC_GOOGLE_CLIENT_ID` on this site to that client ID (only the ID, never the secret).
+4. On the **API**, set `WEB_APP_URL` to this site's address (e.g. `https://taskvane.vercel.app`). The API only accepts browser requests from that address (CORS); without it, sign-in fails with "Could not reach the Taskvane API".
+5. Redeploy both.
+
+How it works: Google's button gives the browser an ID token, the page sends it to `POST /auth/google`, and the API checks it with Google and returns a Taskvane token (valid 7 days), which the page saves in the browser.
 
 ## Deploy
 
